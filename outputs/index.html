@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Muse 灵感引擎 — AI 辅助品牌营销策略推演工具"><title>Muse 灵感引擎 · 品牌营销策略推演</title><link rel="icon" href="data:,"><link rel="stylesheet" href="./styles.css"></head>
+<body><a class="skip-link" href="#main">跳到主内容</a><div class="ambient" aria-hidden="true"></div><div class="app-shell">
+<header class="topbar"><button class="brand" type="button" data-view="studio" aria-label="返回工作台 Studio"><span class="logo">M</span><span>Muse</span></button><nav class="nav" aria-label="主导航"><button class="nav-item" data-view="workflow">方法论 <small>Method</small></button><button class="nav-item" data-view="studio">工作台 <small>Studio</small></button><button class="nav-item" data-view="library">案例库 <small>Library</small></button></nav><span class="product-label">AI 辅助品牌营销策略推演工具</span></header>
+<div id="product-notes"></div><div id="storage-warning" class="storage-warning" role="alert" hidden></div>
+<main id="main"><section class="view login-page" id="view-login" aria-labelledby="login-title"><div class="login-orbit" aria-hidden="true"></div><div class="login-copy"><p class="eyebrow">MUSE / 灵感引擎</p><h1 id="login-title">从一个信号，<br><em>开始想。</em></h1><p>把一个模糊的市场信号，推演成值得讨论的策略。</p><button class="primary-button" id="login-enter" type="button">进入 Muse →</button><small>本地工作区 · 无需创建账号</small></div></section><section class="view" id="view-studio">
+        <div class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">Muse / 灵感引擎</p>
+            <h1>Muse</h1>
+            <p class="hero-en">From signal to <em>strategy.</em></p>
+            <p class="hero-cn">AI 辅助品牌营销策略推演工具<br>从一个市场信号，推演出值得讨论、值得挑战、值得执行的品牌营销策略。</p>
+          </div>
+
+          <div class="composer-wrap">
+            <section class="composer glass-card" aria-label="品牌与 Campaign 材料输入">
+              <div class="composer-head">
+                <span class="mono-label">从一个信号开始 / START WITH A SIGNAL</span>
+                <span class="source-state" id="source-state">来源：等待输入</span>
+              </div>
+              <textarea id="source-input" class="source-input" placeholder="输入一个品牌、产品、Campaign Brief、文化信号或 IP…&#10;&#10;先提供材料，背景可以之后补充；不需要把问题想完整。" aria-label="品牌或 Campaign 材料"></textarea>
+              <div class="composer-actions">
+                <div class="input-actions">
+                  <label class="secondary-button upload-button">
+                    ＋ 上传截图
+                    <input id="image-input" type="file" accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp" hidden>
+                  </label>
+                  <button class="secondary-button" id="open-url-modal" type="button">↗ 粘贴链接</button>
+                </div>
+                <button class="primary-button" id="start-analysis" type="button">开始策略推演 <span>↗</span></button>
+              </div>
+              <p class="input-footnote">Enter 提交 · Shift+Enter 换行 · Cmd/Ctrl+Enter 提交。</p>
+              <div class="analysis-status" id="analysis-status" role="status"></div>
+
+              <div class="attachment" id="image-attachment" hidden>
+                <div class="attachment-row">
+                  <img id="image-preview" class="image-preview" alt="已上传截图预览">
+                  <div>
+                    <p class="attachment-name" id="image-name"></p>
+                    <p class="attachment-warning">未配置 OCR / 视觉模型。请粘贴图片文字；保存压缩预览与文字，不保存原始图片。</p>
+                  </div>
+                </div>
+                <textarea id="image-text" class="image-text" placeholder="粘贴截图中的文字、标题或可识别信息"></textarea>
+                <div class="attachment-action"><button class="text-button" id="remove-image" type="button">移除截图</button>
+                  <button class="secondary-button" id="use-image-text" type="button">使用截图文字开始分析 →</button>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+
+
+<div id="demo-strip" class="demo-strip"><span class="mono-label">从一个模拟案例开始</span><button class="demo-link" data-demo="audio">Auralab · 通勤降噪耳机 <span>模拟案例 ↗</span></button></div>
+<section class="workspace" id="workspace" hidden><header class="workspace-head"><div><p class="mono-label">当前策略工作区 / <span id="case-mode"></span></p><h2 id="workspace-title"></h2><p id="case-meta"></p></div><div class="workspace-meta"><span class="source-badge" id="source-badge"></span><div class="button-group"><button class="secondary-button" id="save-analysis">保存到案例库</button><button class="secondary-button" id="new-analysis">新建案例</button><button class="text-button" id="backup-case">案例 JSON</button></div></div></header><div class="stepper" id="stepper" aria-label="策略工作流"></div><div class="panel-heading stage-heading"><div><h3 id="stage-title" tabindex="-1"></h3><p id="stage-question"></p></div><span id="stage-status" class="stage-status"></span></div><div id="stage-content"></div><div class="panel-actions" id="stage-actions"></div><div id="case-notes"></div></section></section>
+<section class="view" id="view-library"><header class="page-head"><div><p class="eyebrow">Muse / 你的策略档案</p><h1>案例库</h1><p>草稿自动保存在当前浏览器 · 收藏与最近访问分开</p></div><button class="primary-button" id="library-new">＋ 新建案例</button></header><div class="library-toolbar"><nav id="library-filters" aria-label="案例分类"></nav><input id="library-search" type="search" placeholder="搜索案例 / 品牌" aria-label="搜索案例"><label class="secondary-button import-label">导入 案例 JSON<input id="import-case" type="file" accept="application/json,.json"></label></div><div class="library-grid" id="library-grid"></div></section>
+<section class="view method-page" id="view-workflow" aria-labelledby="method-title">
+  <header class="method-hero">
+    <div class="method-hero-copy">
+      <p class="eyebrow">MUSE / METHOD</p>
+      <h1 id="method-title">一个信号，<br><em>能长出什么？</em></h1>
+      <p class="method-hero-note">Muse 从这里开始。</p>
+    </div>
+    <div class="method-hero-orbit" aria-hidden="true">
+      <span class="orbit-dot orbit-dot--one"></span>
+      <span class="orbit-dot orbit-dot--two"></span>
+      <span class="orbit-dot orbit-dot--three"></span>
+      <span class="orbit-word">signal</span>
+    </div>
+  </header>
+
+  <section class="method-map-section" aria-labelledby="method-map-title">
+    <div class="method-map-intro">
+      <p class="eyebrow">THE LONG WAY AROUND</p>
+      <h2 id="method-map-title">从一个点，<br><em>走到一个方向。</em></h2>
+    </div>
+    <figure class="method-map" aria-label="从信号走向生意的策略路径">
+      <ol class="method-map-track">
+        <li class="method-map-step method-map-step--signal">
+          <span class="method-map-index">01</span>
+          <div><strong>信号</strong><small>Signal</small></div>
+        </li>
+        <li class="method-map-step">
+          <span class="method-map-index">02</span>
+          <div><strong>张力</strong><small>Tension</small></div>
+        </li>
+        <li class="method-map-step method-map-step--warm">
+          <span class="method-map-index">03</span>
+          <div><strong>机会</strong><small>Opportunity</small></div>
+        </li>
+        <li class="method-map-step">
+          <span class="method-map-index">04</span>
+          <div><strong>品牌 / 用户</strong><small>Brand / Audience</small></div>
+        </li>
+        <li class="method-map-step method-map-step--purple">
+          <span class="method-map-index">05</span>
+          <div><strong>创意领地</strong><small>Creative Territory</small></div>
+        </li>
+        <li class="method-map-step">
+          <span class="method-map-index">06</span>
+          <div><strong>行动</strong><small>Campaign</small></div>
+        </li>
+        <li class="method-map-step method-map-step--last">
+          <span class="method-map-index">07</span>
+          <div><strong>生意</strong><small>Business</small></div>
+        </li>
+      </ol>
+      <div class="method-map-prompts" aria-label="地图提示">
+        <span>谁在意？</span>
+        <span>现在发生了什么？</span>
+        <span>品牌为何在场？</span>
+        <span>用户为何参与？</span>
+      </div>
+      <figcaption>同一条线，可以从不同位置开始。</figcaption>
+    </figure>
+  </section>
+
+  <section class="method-playground" aria-labelledby="method-question-title">
+    <header class="method-block-head">
+      <p class="eyebrow">TRY A SIGNAL</p>
+      <h2 id="method-question-title">然后呢？</h2>
+      <p>看到一个信号之后，你会先想什么？</p>
+    </header>
+    <div class="method-question-card">
+      <div class="method-signal-card">
+        <span class="method-card-kicker">SIGNAL / 01</span>
+        <p>最近，年轻人开始重新关注 <strong>X</strong>。</p>
+        <span class="method-signal-mark" aria-hidden="true">↗</span>
+      </div>
+      <div class="method-choice-panel">
+        <p class="method-choice-label">你会先追哪一条？</p>
+        <div class="method-choices" role="group" aria-label="选择一个追问方向">
+          <button type="button" class="method-choice" data-method-question="why"><span>A</span>为什么？</button>
+          <button type="button" class="method-choice" data-method-question="who"><span>B</span>谁在关注？</button>
+          <button type="button" class="method-choice" data-method-question="brand"><span>C</span>品牌能做什么？</button>
+          <button type="button" class="method-choice" data-method-question="act"><span>D</span>先做了再说。</button>
+        </div>
+        <div class="method-feedback" id="method-question-feedback" aria-live="polite">
+          <p class="method-feedback-hint">点一个，看看思路往哪走。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="method-branches" aria-labelledby="method-branches-title">
+    <header class="method-block-head">
+      <p class="eyebrow">ONE SIGNAL / MANY SHAPES</p>
+      <h2 id="method-branches-title">同一个信号，会长成什么？</h2>
+    </header>
+    <div class="method-branch-card">
+      <p class="method-branch-signal">某个文化现象突然变得很受关注。</p>
+      <div class="method-stations" role="tablist" aria-label="选择一个站位">
+        <button type="button" class="method-station is-active" data-method-station="brand" role="tab" aria-selected="true">品牌</button>
+        <button type="button" class="method-station" data-method-station="audience" role="tab" aria-selected="false">用户</button>
+        <button type="button" class="method-station" data-method-station="platform" role="tab" aria-selected="false">平台</button>
+      </div>
+      <div class="method-branch-path" aria-live="polite">
+        <div class="method-branch-node method-branch-node--fixed"><small>Signal</small><strong>关注<br>正在发生</strong></div>
+        <span class="method-branch-arrow" aria-hidden="true">→</span>
+        <div class="method-branch-node"><small>Audience / 谁</small><strong id="method-branch-audience">正在寻找一种参与方式</strong></div>
+        <span class="method-branch-arrow" aria-hidden="true">→</span>
+        <div class="method-branch-node"><small>Opportunity / 机会</small><strong id="method-branch-opportunity">把关注变成可参与的体验</strong></div>
+      </div>
+      <div class="method-branch-footer">
+        <p><span id="method-branch-context">品牌的能力成为入口</span><small>Context / 关系</small></p>
+        <p><span id="method-branch-strategy">从品牌能力出发，设计一条进入话题的路径</span><small>Strategy / 走法</small></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="method-cta" aria-labelledby="method-cta-title">
+    <p class="eyebrow">YOUR TURN</p>
+    <h2 id="method-cta-title">有个信号？<br><em>让它长出来。</em></h2>
+    <button class="primary-button" type="button" data-view="studio">进入工作台 →</button>
+  </section>
+</section></main>
+<footer><div><span>Muse 灵感引擎</span><p>Muse 不替你做决定，而是帮你把决定想清楚。</p></div></footer></div>
+  <dialog id="url-modal" class="url-dialog">
+    <section class="modal" aria-labelledby="url-modal-title">
+      <header><h2 id="url-modal-title">添加网页来源</h2><button type="button" id="close-url-modal" aria-label="关闭">×</button></header>
+      <label for="url-input">SOURCE URL / 粘贴真实链接</label>
+      <input id="url-input" class="url-input" type="url" placeholder="https://..." autocomplete="off">
+      <p class="url-status" id="url-status" role="status"></p>
+      <div id="url-fallback-wrap" hidden>
+        <label for="url-fallback">粘贴页面正文继续（不代表已核验）</label>
+        <textarea id="url-fallback" class="url-fallback" placeholder="粘贴你看到的标题或正文；来源将标记为“用户提供链接 + 用户粘贴正文”"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="secondary-button" id="cancel-url" type="button">取消</button>
+        <button class="primary-button" id="read-url" type="button">尝试读取网页 →</button>
+        <button class="primary-button" id="use-url-fallback" type="button" hidden>使用粘贴正文 →</button>
+      </div>
+    </section>
+  </dialog>
+
+<dialog id="manage-dialog" class="manage-dialog"><form id="manage-form"><h2 id="manage-title"></h2><p id="manage-copy"></p><label id="rename-label">案例名称<input id="rename-input" maxlength="120" required></label><div class="button-group"><button type="button" class="secondary-button" id="manage-cancel">取消</button><button type="submit" class="primary-button" id="manage-confirm">确认</button></div></form></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="./js/models.js"></script>
+<script src="./data/methodology.js"></script>
+<script src="./data/demo-cases.js"></script>
+<script src="./js/evidence.js"></script>
+<script src="./js/store.js"></script>
+<script src="./js/storage.js"></script>
+<script src="./js/router.js"></script>
+<script src="./js/source-service.js"></script>
+<script src="./js/demo-engine.js"></script>
+<script src="./js/analysis-service.js"></script>
+<script src="./js/export-service.js"></script>
+<script src="./js/ui-components.js"></script>
+<script src="./js/workspace-view.js"></script>
+<script src="./js/library-view.js"></script>
+<script src="./js/method-playground.js"></script>
+<script src="./app.js"></script>
+</body></html>

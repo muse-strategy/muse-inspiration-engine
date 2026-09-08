@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Muse — AI 内容策略助手">
+  <title>Muse · AI 内容策略助手</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="ambient" aria-hidden="true"></div>
+  <div class="app-shell">
+    <header class="topbar">
+      <button class="brand" type="button" data-view="studio" aria-label="返回 Studio">
+        <span class="logo">M</span><span>Muse</span>
+      </button>
+      <nav class="nav" aria-label="主导航">
+        <button class="nav-item is-active" type="button" data-view="studio">Studio</button>
+        <button class="nav-item" type="button" data-view="library">Library</button>
+        <button class="nav-item" type="button" data-view="workflow">Workflow</button>
+      </nav>
+      <div class="product-label"><i></i>AI CONTENT STRATEGY ASSISTANT</div>
+    </header>
+
+    <main>
+      <section class="view is-active" id="view-studio">
+        <div class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">Muse / Creative Intelligence</p>
+            <h1>Muse</h1>
+            <p class="hero-en">Turn trends into <em>stories.</em></p>
+            <p class="hero-cn">让每一个趋势，找到属于它的创意方向。<br>先判断价值，再决定怎么做。</p>
+          </div>
+
+          <div class="composer-wrap">
+            <section class="composer glass-card" aria-label="热点材料输入">
+              <div class="composer-head">
+                <span class="mono-label">01 / DISCOVER A SOURCE</span>
+                <span class="source-state" id="source-state">来源：等待输入</span>
+              </div>
+              <textarea id="source-input" class="source-input" placeholder="输入一个热点，探索它是否值得成为内容\n\n例如：某品牌 ×《流浪地球》电影IP合作思考"></textarea>
+              <div class="composer-actions">
+                <div class="input-actions">
+                  <label class="secondary-button upload-button">
+                    ＋ 上传截图
+                    <input id="image-input" type="file" accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp" hidden>
+                  </label>
+                  <button class="secondary-button" id="open-url-modal" type="button">↗ 粘贴链接</button>
+                </div>
+                <button class="primary-button" id="start-analysis" type="button">开始分析 <span>↗</span></button>
+              </div>
+              <p class="input-footnote">支持文字、PNG / JPG / JPEG / WEBP 截图，或用户提供的网页链接。不会展示无来源的热度、排名或爆款概率。</p>
+              <div class="analysis-status" id="analysis-status" role="status"></div>
+
+              <div class="attachment" id="image-attachment" hidden>
+                <div class="attachment-row">
+                  <img id="image-preview" class="image-preview" alt="已上传截图预览">
+                  <div>
+                    <p class="attachment-name" id="image-name"></p>
+                    <p class="attachment-warning">当前视觉分析能力未配置。请粘贴图片中的文字继续分析；Muse 不会伪装成已经识别。</p>
+                  </div>
+                </div>
+                <textarea id="image-text" class="image-text" placeholder="粘贴截图中的文字、标题或可识别信息"></textarea>
+                <div class="attachment-action">
+                  <button class="secondary-button" id="use-image-text" type="button">使用截图文字开始分析 →</button>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <div class="principles" aria-label="Muse 产品原则">
+          <span>真实来源优先</span><span>AI 推断明确标注</span><span>人保留最终判断</span>
+        </div>
+
+        <section class="workspace" id="workspace" hidden>
+          <header class="workspace-head">
+            <div>
+              <p class="mono-label">ACTIVE WORKSPACE / MATERIAL ANALYSIS</p>
+              <h2 id="workspace-title">—</h2>
+              <p>围绕一份真实材料，完成从发现、判断到可交付方案的五步工作流。</p>
+            </div>
+            <div class="workspace-meta">
+              <span class="source-badge" id="source-badge">来源：用户输入</span>
+              <div>
+                <button class="secondary-button" id="save-analysis" type="button">保存到 Library</button>
+                <button class="secondary-button" id="new-analysis" type="button">新建分析</button>
+              </div>
+            </div>
+          </header>
+
+          <div class="stepper" id="stepper" aria-label="内容策略工作流">
+            <button class="step is-active" type="button" data-step="0">
+              <span class="step-marker">01</span><span class="step-name">Discover</span><span class="step-cn">发现热点</span>
+            </button>
+            <button class="step" type="button" data-step="1" disabled>
+              <span class="step-marker">02</span><span class="step-name">Evaluate</span><span class="step-cn">判断价值</span>
+            </button>
+            <button class="step" type="button" data-step="2" disabled>
+              <span class="step-marker">03</span><span class="step-name">Creative Direction</span><span class="step-cn">寻找切入点</span>
+            </button>
+            <button class="step" type="button" data-step="3" disabled>
+              <span class="step-marker">04</span><span class="step-name">Content Brief</span><span class="step-cn">输出执行方案</span>
+            </button>
+            <button class="step" type="button" data-step="4" disabled>
+              <span class="step-marker">05</span><span class="step-name">Visual Assistant</span><span class="step-cn">辅助视觉表达</span>
+            </button>
+          </div>
+
+          <section class="step-panel is-active" id="step-panel-0" data-panel="0">
+            <div class="panel-heading">
+              <div><h3>Discover / 发现热点</h3><p>先把来源和事实放在桌面上，再开始推断。</p></div>
+              <span class="panel-code">SOURCE → CONTEXT → SIGNAL</span>
+            </div>
+            <div class="discover-grid">
+              <article class="info-card info-card--accent">
+                <p class="card-label">TOPIC / 热点名称</p>
+                <h4 id="discover-title">—</h4>
+                <p class="card-label">SUMMARY / 内容摘要</p>
+                <p class="body-copy" id="discover-summary">—</p>
+                <div class="keywords" id="discover-keywords"></div>
+              </article>
+              <article class="info-card">
+                <p class="card-label">SOURCE / 来源</p>
+                <p class="body-copy" id="discover-source">—</p>
+                <p class="card-label spaced">NEEDS VERIFY / 待验证</p>
+                <ul class="plain-list" id="verify-list"></ul>
+              </article>
+            </div>
+            <div class="evidence-grid">
+              <article class="info-card"><p class="card-label">SOURCE / 用户提供</p><pre id="user-material">—</pre></article>
+              <article class="info-card"><p class="card-label">AI INFERENCE / AI 推断</p><ul class="plain-list" id="inference-list"></ul></article>
+              <article class="info-card"><p class="card-label">CONTENT SIGNAL / 内容信号</p><ul class="plain-list" id="signal-list"></ul></article>
+            </div>
+            <div class="panel-actions">
+              <button class="text-button" id="edit-material" type="button">← 返回 Studio 修改材料</button>
+              <button class="primary-button" id="continue-evaluate" type="button">确认材料，进入价值判断 →</button>
+            </div>
+          </section>
+
+          <section class="step-panel" id="step-panel-1" data-panel="1">
+            <div class="panel-heading">
+              <div><h3>Evaluate / 判断价值</h3><p>不预测爆款，只呈现这份材料与内容目标的适配度。</p></div>
+              <span class="panel-code">FIT ≠ FAME</span>
+            </div>
+            <div class="metrics" id="metrics"></div>
+            <article class="recommendation">
+              <span class="recommendation-label">RECOMMENDED ACTION</span>
+              <div><h4 id="recommendation-title">—</h4><ul class="plain-list" id="recommendation-reasons"></ul></div>
+            </article>
+            <article class="credibility">
+              <p class="card-label">INFORMATION QUALITY / 信息可信度与缺口</p>
+              <p id="credibility-copy">—</p>
+            </article>
+            <div class="panel-actions">
+              <button class="text-button" type="button" data-back="0">← 返回 Discover</button>
+              <button class="primary-button" id="continue-direction" type="button">接受判断，寻找切入点 →</button>
+            </div>
+          </section>
+
+          <section class="step-panel" id="step-panel-2" data-panel="2">
+            <div class="panel-heading">
+              <div><h3>Creative Direction / 寻找切入点</h3><p>不是三篇不同文案，而是三种不同的内容策略。</p></div>
+              <span class="panel-code">INSIGHT → ANGLE → ROLE</span>
+            </div>
+            <div class="directions" id="directions"></div>
+            <div class="panel-actions">
+              <button class="text-button" type="button" data-back="1">← 返回 Evaluate</button>
+              <span class="panel-code">选择一个方向后生成 Brief</span>
+            </div>
+          </section>
+
+          <section class="step-panel" id="step-panel-3" data-panel="3">
+            <div class="panel-heading">
+              <div><h3>Content Brief / 输出执行方案</h3><p>把选定方向整理成可以交给内容团队的交付物。</p></div>
+              <span class="panel-code">READY TO HAND OFF</span>
+            </div>
+            <div class="brief-toolbar">
+              <button class="secondary-button" id="copy-brief" type="button">复制 Brief</button>
+              <button class="secondary-button" id="export-brief" type="button">导出 Brief</button>
+              <button class="secondary-button" id="regenerate-brief" type="button">重新生成</button>
+              <button class="text-button" id="back-direction" type="button">← 返回修改方向</button>
+            </div>
+            <article class="brief-paper" id="brief-paper"></article>
+            <div class="panel-actions">
+              <span class="panel-code">保存后可在 Library 重新打开</span>
+              <button class="primary-button" id="continue-visual" type="button">继续到 Visual Assistant →</button>
+            </div>
+          </section>
+
+          <section class="step-panel" id="step-panel-4" data-panel="4">
+            <div class="panel-heading">
+              <div><h3>Visual Assistant / 辅助视觉表达</h3><p>从 Brief 反推视觉语言，不伪造已经生成的图片。</p></div>
+              <span class="panel-code">BRIEF → VISUAL SYSTEM</span>
+            </div>
+            <div class="visual-grid" id="visual-grid"></div>
+            <article class="visual-prompt">
+              <p class="card-label">VISUAL PROMPT / 视觉 Prompt</p>
+              <pre id="visual-prompt">—</pre>
+            </article>
+            <div class="panel-actions">
+              <button class="text-button" type="button" data-back="3">← 返回 Content Brief</button>
+              <div class="button-group">
+                <button class="secondary-button" id="generate-prompt" type="button">生成视觉 Prompt</button>
+                <button class="primary-button" id="copy-prompt" type="button">复制 Prompt ↗</button>
+              </div>
+            </div>
+          </section>
+        </section>
+      </section>
+
+      <section class="view" id="view-library">
+        <header class="page-head">
+          <div><p class="eyebrow">Muse / Saved Materials</p><h1>Library</h1><p>只保存你提交过的真实材料和已经形成的策略结果。</p></div>
+          <button class="primary-button" type="button" data-view="studio">＋ 新建分析</button>
+        </header>
+        <div class="library-grid" id="library-grid"></div>
+      </section>
+
+      <section class="view" id="view-workflow">
+        <header class="workflow-hero">
+          <p class="eyebrow">Muse / The Method</p>
+          <h1>从信号，<br>走到故事。</h1>
+          <p>Muse 不替内容运营者跳过判断。它把一份真实材料拆成可讨论、可修改、可交付的策略路径。</p>
+          <button class="primary-button" type="button" data-view="studio">带一份材料进入 Studio →</button>
+        </header>
+        <div class="method">
+          <article><span>01 / DISCOVER</span><h2>发现热点</h2><p>输入文字、上传截图或粘贴链接。记录原始材料、来源和需要核实的信息。</p><i>↘</i></article>
+          <article><span>02 / EVALUATE</span><h2>判断价值</h2><p>从用户、品牌、目标、内容空间、成本和风险出发，给出有理由的推荐动作。</p><i>↘</i></article>
+          <article><span>03 / CREATIVE DIRECTION</span><h2>寻找切入点</h2><p>生成情绪共鸣、实用价值、互动参与三种策略，说明品牌如何自然出现。</p><i>↘</i></article>
+          <article><span>04 / CONTENT BRIEF</span><h2>输出执行方案</h2><p>整理 Campaign、标题、结构、素材、互动设计、观察指标与人工核实清单。</p><i>↘</i></article>
+          <article><span>05 / VISUAL ASSISTANT</span><h2>辅助视觉表达</h2><p>从 Brief 提炼色彩、构图、字体、封面和图片关键词，并输出可复制 Prompt。</p><i>↘</i></article>
+        </div>
+      </section>
+    </main>
+
+    <footer><span>Muse / AI × CONTENT × STRATEGY</span><span>真实来源优先 · 人保留最终判断</span></footer>
+  </div>
+
+  <div class="modal-backdrop" id="url-modal" hidden>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="url-modal-title">
+      <header><h2 id="url-modal-title">添加网页来源</h2><button type="button" id="close-url-modal" aria-label="关闭">×</button></header>
+      <label for="url-input">SOURCE URL / 粘贴真实链接</label>
+      <input id="url-input" class="url-input" type="url" placeholder="https://..." autocomplete="off">
+      <p class="url-status" id="url-status" role="status"></p>
+      <div id="url-fallback-wrap" hidden>
+        <label for="url-fallback">读取失败时，粘贴页面正文继续</label>
+        <textarea id="url-fallback" class="url-fallback" placeholder="粘贴你看到的标题或正文；来源将标记为“用户提供链接 + 用户粘贴正文”"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="secondary-button" id="cancel-url" type="button">取消</button>
+        <button class="primary-button" id="read-url" type="button">读取并分析 →</button>
+        <button class="primary-button" id="use-url-fallback" type="button" hidden>使用粘贴正文 →</button>
+      </div>
+    </section>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="./app.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+# OS / editor
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.vscode/
+.idea/
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+secrets.json
+
+# Dependencies / generated output
+node_modules/
+coverage/
+dist/
+build/
+work/test-results/
+*.log
+*.tmp
+*.swp
+
+# Local backups and archives
+backups/
+*.tar.gz
