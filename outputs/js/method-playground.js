@@ -83,6 +83,13 @@
   }
 
   function init(root=document){
+    const mapSection=$('.method-map-section',root);
+    if(mapSection){
+      // Method is initially hidden in the SPA; trigger when its view is actually shown.
+      const reveal=()=>{mapSection.classList.remove('is-revealed');requestAnimationFrame(()=>requestAnimationFrame(()=>mapSection.classList.add('is-revealed')))};
+      reveal();
+      new MutationObserver(()=>{if($('#view-workflow',root)?.classList.contains('is-active'))reveal()}).observe($('#view-workflow',root)||root,{attributes:true,attributeFilter:['class']});
+    }
     const questionFeedbackEl=$('#method-question-feedback',root);
     if(questionFeedbackEl){
       $$('.method-choice',root).forEach(button=>button.addEventListener('click',()=>renderQuestion(button.dataset.methodQuestion,button,questionFeedbackEl)));
@@ -90,6 +97,20 @@
     const branchCard=$('.method-branch-card',root);
     if(branchCard){
       $$('.method-station',branchCard).forEach(button=>button.addEventListener('click',()=>renderStation(button.dataset.methodStation,button,branchCard)));
+    }
+    const simulation=$('[data-simulation]',root);
+    if(simulation){
+      const paths={
+        audience:{label:'AUDIENCE-FIRST',nodes:['Signal','人真正关心的事','尚未被满足的需要','让参与有意义','共同完成一个小行动'],note:'从谁在意开始，机会会靠近真实的人。'},
+        brand:{label:'BRAND-FIRST',nodes:['Signal','品牌可以承担的角色','值得被相信的能力','一个自然的进入理由','让能力被体验'],note:'从品牌能做什么开始，策略会长出清晰的边界。'},
+        culture:{label:'CULTURE-FIRST',nodes:['Signal','正在发生的文化张力','人们重新理解它的方式','一个新的表达空间','让话题继续发生'],note:'从变化本身开始，策略会寻找新的语境。'}
+      };
+      $$('.simulation-choices button',simulation).forEach(button=>button.addEventListener('click',()=>{
+        const path=paths[button.dataset.simPath];
+        $$('.simulation-choices button',simulation).forEach(x=>x.classList.toggle('is-selected',x===button));
+        const result=$('[data-simulation-result]',simulation);result.hidden=false;
+        result.innerHTML=`<p class="simulation-label">${path.label} · YOUR STRATEGY SHAPE</p><div class="simulation-nodes">${path.nodes.map((node,i)=>`<div class="simulation-node"><small>${String(i+1).padStart(2,'0')}</small><strong>${node}</strong></div>${i<path.nodes.length-1?'<span aria-hidden="true">↓</span>':''}`).join('')}</div><p class="simulation-note">${path.note}</p>`;
+      }));
     }
   }
 
