@@ -1,7 +1,7 @@
 (function(M){
   const {e,badge}=M.ui;
   M.renderLibrary=(cases,filter='recent',query='')=>{
-    const demoCards=M.demos.map(d=>`<article class="library-card demo-card"><span class="demo-badge">SIMULATED CASE / 模拟案例</span><h2>${e(d.name)}</h2><p>${e(d.subtitle)}</p><p>从一个消费电子品牌的增长问题开始，看看一个信号如何被推演成策略。</p><button class="secondary-button" data-demo="${d.id}">载入演示 →</button></article>`).join('');
+    const demoCards=M.demos.map(d=>`<article class="library-card demo-card"><span class="demo-badge">SIMULATED CASE / 模拟案例</span><h2>${e(d.name)}</h2><p class="archive-intro">${e(d.subtitle)}</p><p>从一个消费电子品牌的增长问题开始，看看一个信号如何被推演成策略。</p><dl class="archive-preview"><div><dt>Signal</dt><dd>通勤中的聆听选择</dd></div><div><dt>Opportunity</dt><dd>从功能比较走向体验判断</dd></div><div><dt>Strategy</dt><dd>让用户亲自比较，而非替用户决定</dd></div><div><dt>Campaign</dt><dd>可切换模式的真实场景演示</dd></div><div><dt>Business</dt><dd>建立产品能力与使用入口的连接</dd></div></dl><button class="secondary-button" data-demo="${d.id}">查看策略档案 →</button></article>`).join('');
     if(filter==='demo')return demoCards;
     const matches=cases.filter(c=>(filter!=='saved'||c.saved)&&(filter!=='outputs'||c.stages.express.status==='ready')&&(`${c.name} ${c.context.brand} ${c.context.product}`).toLowerCase().includes(query.toLowerCase())).sort((a,b)=>(b.openedAt||b.updatedAt).localeCompare(a.openedAt||a.updatedAt));
     if(!matches.length)return filter==='recent'?demoCards:'<div class="empty-state">这里暂时没有匹配的记录。<br>在 Studio 开始一个案例，或载入模拟案例。草稿自动保存在当前浏览器。</div>';
